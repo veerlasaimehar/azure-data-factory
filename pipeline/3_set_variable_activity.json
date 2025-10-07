@@ -1,0 +1,105 @@
+{
+	"name": "3_set_variable_activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "getStudentName",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "std_name",
+					"value": "Sai"
+				}
+			},
+			{
+				"name": "getStudentAge",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getStudentName",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "std_age",
+					"value": "30"
+				}
+			},
+			{
+				"name": "getMessage",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getStudentLocation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": {
+						"value": "@concat('Student Name is ', variables('std_name'), ', Student age is ', variables('std_age'), ' and location is ', variables('std_location'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "getStudentLocation",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getStudentAge",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "std_location",
+					"value": "Chennai"
+				}
+			}
+		],
+		"variables": {
+			"std_name": {
+				"type": "String"
+			},
+			"std_age": {
+				"type": "String"
+			},
+			"msg": {
+				"type": "String"
+			},
+			"std_location": {
+				"type": "String",
+				"defaultValue": "Hyderabad"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-10-01T18:02:29Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

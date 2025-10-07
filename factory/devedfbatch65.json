@@ -1,0 +1,9 @@
+{
+	"name": "devedfbatch65",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8716468b-db66-4f17-b5b9-8bd042abd71d",
+		"tenantId": "a48480df-eaba-4e7e-af11-79fd153dabc7"
+	}
+}
