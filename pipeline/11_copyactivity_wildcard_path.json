@@ -1,0 +1,23 @@
+{
+	"name": "11_copyactivity_wildcard_path",
+	"properties": {
+		"activities": [
+			{
+				"name": "getCurrentTimeStamp",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			}
+		],
+		"parameters": {
+			"dt": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
