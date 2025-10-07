@@ -10,12 +10,24 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "dt",
+					"value": {
+						"value": "@utcNow()",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
 			"dt": {
 				"type": "string"
+			}
+		},
+		"variables": {
+			"dt": {
+				"type": "String"
 			}
 		},
 		"annotations": []
