@@ -21,7 +21,7 @@
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "inbound",
-							"wildcardFileName": "file?.txt",
+							"wildcardFileName": "file*",
 							"deleteFilesAfterCompletion": false
 						},
 						"formatSettings": {
