@@ -38,7 +38,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Binary1",
+						"referenceName": "DS_inbound_wildcard",
 						"type": "DatasetReference"
 					}
 				],

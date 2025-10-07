@@ -1,5 +1,5 @@
 {
-	"name": "Binary1",
+	"name": "DS_inbound_wildcard",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_gen2",
