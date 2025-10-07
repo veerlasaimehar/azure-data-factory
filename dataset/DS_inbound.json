@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "DP-900 Certification.pdf",
 				"folderPath": "inbound",
 				"fileSystem": "devcontainer"
 			}
