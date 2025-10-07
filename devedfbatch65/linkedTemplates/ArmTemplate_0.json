@@ -408,7 +408,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Binary1')]",
+			"name": "[concat(parameters('factoryName'), '/DS_inbound_wildcard')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -668,7 +668,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "Binary1",
+								"referenceName": "DS_inbound_wildcard",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -688,7 +688,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Binary1')]",
+				"[concat(variables('factoryId'), '/datasets/DS_inbound_wildcard')]",
 				"[concat(variables('factoryId'), '/datasets/DS_outbound')]"
 			]
 		},
