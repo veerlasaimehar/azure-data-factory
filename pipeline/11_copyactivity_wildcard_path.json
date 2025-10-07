@@ -18,15 +18,37 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "getfiledate",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getCurrentTimeStamp",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "filedate",
+					"value": {
+						"value": "@formatDateTime(variables('dt'), 'ddMMyyyy')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
-		"parameters": {
-			"dt": {
-				"type": "string"
-			}
-		},
 		"variables": {
 			"dt": {
+				"type": "String"
+			},
+			"filedate": {
 				"type": "String"
 			}
 		},
