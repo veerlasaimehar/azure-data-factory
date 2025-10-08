@@ -160,7 +160,7 @@
 									"recursive": true,
 									"wildcardFolderPath": "inbound",
 									"wildcardFileName": {
-										"value": "('orders',*)",
+										"value": "@concat('orders','*')",
 										"type": "Expression"
 									},
 									"deleteFilesAfterCompletion": false
