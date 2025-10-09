@@ -16,7 +16,7 @@
 					"value": [
 						"orders.txt",
 						"customers.txt",
-						"accounts.txt"
+						"sales.txt"
 					]
 				}
 			},
@@ -37,6 +37,7 @@
 						"value": "@variables('files_list')",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "getFileName",
@@ -54,6 +55,63 @@
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "getFileName",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_inbound_param",
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": {
+											"value": "@variables('file_name')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_outbound",
+									"type": "DatasetReference"
+								}
+							]
 						}
 					]
 				}
