@@ -67,12 +67,6 @@
 						"type": "BinarySource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"wildcardFolderPath": "inbound",
-							"wildcardFileName": {
-								"value": "@concat('orders','*')",
-								"type": "Expression"
-							},
 							"deleteFilesAfterCompletion": false
 						},
 						"formatSettings": {
