@@ -455,7 +455,7 @@
 								"value": "@variables('files_list')",
 								"type": "Expression"
 							},
-							"isSequential": true,
+							"isSequential": false,
 							"activities": [
 								{
 									"name": "getFileName",
