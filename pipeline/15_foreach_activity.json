@@ -1,0 +1,72 @@
+{
+	"name": "15_foreach_activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "getFilesList",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "files_list",
+					"value": [
+						"orders.txt",
+						"customers.txt",
+						"accounts.txt"
+					]
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "getFilesList",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('files_list')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "getFileName",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "file_name",
+								"value": {
+									"value": "@item()",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"files_list": {
+				"type": "Array"
+			},
+			"file_name": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
