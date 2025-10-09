@@ -1,5 +1,5 @@
 {
-	"name": "15_foreach_activity_sequential",
+	"name": "15_foreach_activity_copy_parallel",
 	"properties": {
 		"activities": [
 			{
@@ -37,36 +37,12 @@
 						"value": "@variables('files_list')",
 						"type": "Expression"
 					},
-					"isSequential": true,
+					"isSequential": false,
 					"activities": [
-						{
-							"name": "getFileName",
-							"type": "SetVariable",
-							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "file_name",
-								"value": {
-									"value": "@item()",
-									"type": "Expression"
-								}
-							}
-						},
 						{
 							"name": "Copy data1",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "getFileName",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
