@@ -144,14 +144,8 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "ds_outtbound_parameter",
-									"type": "DatasetReference",
-									"parameters": {
-										"folder_name": {
-											"value": "@variables('fileprefix')",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "ds_outbound_multiple_prarm",
+									"type": "DatasetReference"
 								}
 							]
 						},
