@@ -1527,11 +1527,15 @@
 									],
 									"outputs": [
 										{
-											"referenceName": "ds_outtbound_parameter",
+											"referenceName": "ds_outbound_multiple_prarm",
 											"type": "DatasetReference",
 											"parameters": {
-												"folder_name": {
+												"fileprefix": {
 													"value": "@variables('fileprefix')",
+													"type": "Expression"
+												},
+												"filedate": {
+													"value": "@variables('fileDate')",
 													"type": "Expression"
 												}
 											}
@@ -1585,7 +1589,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_inbound_gm')]",
 				"[concat(variables('factoryId'), '/datasets/ds_inbound_gm_param')]",
-				"[concat(variables('factoryId'), '/datasets/ds_outtbound_parameter')]"
+				"[concat(variables('factoryId'), '/datasets/ds_outbound_multiple_prarm')]"
 			]
 		},
 		{
@@ -3077,6 +3081,40 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_outbound_multiple_prarm')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileprefix": {
+						"type": "string"
+					},
+					"filedate": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": {
+							"value": "@concat('outbound/',dataset().fileprefix,'/',dataset().filedate)",
+							"type": "Expression"
+						},
+						"fileSystem": "devcontainer"
+					}
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
