@@ -145,7 +145,17 @@
 							"outputs": [
 								{
 									"referenceName": "ds_outbound_multiple_prarm",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileprefix": {
+											"value": "@variables('fileprefix')",
+											"type": "Expression"
+										},
+										"filedate": {
+											"value": "@variables('fileDate')",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						},
