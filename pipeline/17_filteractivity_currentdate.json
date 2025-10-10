@@ -1,5 +1,5 @@
 {
-	"name": "17_filteractivity",
+	"name": "17_filteractivity_currentdate",
 	"properties": {
 		"activities": [
 			{
@@ -72,6 +72,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
