@@ -1,0 +1,23 @@
+{
+	"name": "17_filteractivity_prevdate",
+	"properties": {
+		"activities": [
+			{
+				"name": "getFileDate",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			}
+		],
+		"parameters": {
+			"filedt": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
