@@ -84,6 +84,61 @@
 									"value": "@endswith(variables('filename'),'csv')",
 									"type": "Expression"
 								},
+								"ifFalseActivities": [
+									{
+										"name": "Copy data2",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "BinarySource",
+												"storeSettings": {
+													"type": "AzureBlobFSReadSettings",
+													"recursive": true
+												},
+												"formatSettings": {
+													"type": "BinaryReadSettings"
+												}
+											},
+											"sink": {
+												"type": "BinarySink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												}
+											},
+											"enableStaging": false
+										},
+										"inputs": [
+											{
+												"referenceName": "ds_inbound_gm_param",
+												"type": "DatasetReference",
+												"parameters": {
+													"srcfilename": {
+														"value": "@variables('filename')",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "ds_outbound_foldername",
+												"type": "DatasetReference",
+												"parameters": {
+													"foldername": "JSON"
+												}
+											}
+										]
+									}
+								],
 								"ifTrueActivities": [
 									{
 										"name": "Copy data1",
@@ -131,7 +186,10 @@
 										"outputs": [
 											{
 												"referenceName": "ds_outbound_foldername",
-												"type": "DatasetReference"
+												"type": "DatasetReference",
+												"parameters": {
+													"foldername": "CSV"
+												}
 											}
 										]
 									}
