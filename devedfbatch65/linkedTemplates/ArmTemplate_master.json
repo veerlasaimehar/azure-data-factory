@@ -7,9 +7,25 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "devedfbatch65"
 		},
+		"LS_azuresqldb_saimehar_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_azuresqldb_saimehar'"
+		},
 		"LS_gen2_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_gen2'"
+		},
+		"LS_azuresqldb_saimehar_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "saimeharsqlserver.database.windows.net"
+		},
+		"LS_azuresqldb_saimehar_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "saimeharsqldb"
+		},
+		"LS_azuresqldb_saimehar_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "saimehar"
 		},
 		"LS_gen2_properties_typeProperties_url": {
 			"type": "string",
@@ -42,8 +58,20 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"LS_azuresqldb_saimehar_password": {
+						"value": "[parameters('LS_azuresqldb_saimehar_password')]"
+					},
 					"LS_gen2_accountKey": {
 						"value": "[parameters('LS_gen2_accountKey')]"
+					},
+					"LS_azuresqldb_saimehar_properties_typeProperties_server": {
+						"value": "[parameters('LS_azuresqldb_saimehar_properties_typeProperties_server')]"
+					},
+					"LS_azuresqldb_saimehar_properties_typeProperties_database": {
+						"value": "[parameters('LS_azuresqldb_saimehar_properties_typeProperties_database')]"
+					},
+					"LS_azuresqldb_saimehar_properties_typeProperties_userName": {
+						"value": "[parameters('LS_azuresqldb_saimehar_properties_typeProperties_userName')]"
 					},
 					"LS_gen2_properties_typeProperties_url": {
 						"value": "[parameters('LS_gen2_properties_typeProperties_url')]"
