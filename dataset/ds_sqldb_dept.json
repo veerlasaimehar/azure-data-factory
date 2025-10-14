@@ -1,0 +1,25 @@
+{
+	"name": "ds_sqldb_dept",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azuresqldb_saimehar",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dept_id",
+				"type": "varchar"
+			},
+			{
+				"name": "dept_name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "saimehardp700",
+			"table": "dept_tbl"
+		}
+	}
+}
