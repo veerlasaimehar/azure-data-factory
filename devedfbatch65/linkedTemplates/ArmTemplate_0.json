@@ -30,6 +30,10 @@
 		"LS_gen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://srinivasstgacctbatch95.dfs.core.windows.net/"
+		},
+		"LS_saimehar_kv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://saimeharkv95.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -441,6 +445,19 @@
 						"type": "SecureString",
 						"value": "[parameters('LS_gen2_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_saimehar_kv')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('LS_saimehar_kv_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []
@@ -858,37 +875,6 @@
 					"quoteChar": "\""
 				},
 				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_outbound_foldername')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_gen2",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"foldername": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": {
-							"value": "@concat('outbound/',dataset().foldername)",
-							"type": "Expression"
-						},
-						"fileSystem": "devcontainer"
-					}
-				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"

@@ -27,9 +27,25 @@
 			"type": "string",
 			"defaultValue": "saimehar"
 		},
+		"LS_azuresqldb_saimehar_kv_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "saimeharsqlserver.database.windows.net"
+		},
+		"LS_azuresqldb_saimehar_kv_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "saimeharsqldb"
+		},
+		"LS_azuresqldb_saimehar_kv_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "saimehar"
+		},
 		"LS_gen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://srinivasstgacctbatch95.dfs.core.windows.net/"
+		},
+		"LS_saimehar_kv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://saimeharkv95.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -2087,6 +2103,47 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/18_lookupactivity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "ds_azuresqldb_lkp",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_azuresqldb_lkp')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/19_Switch_Activity')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -4028,6 +4085,42 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_azuresqldb_lkp')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_azuresqldb_saimehar_kv",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "dept_id",
+						"type": "varchar"
+					},
+					{
+						"name": "dept_name",
+						"type": "varchar"
+					},
+					{
+						"name": "salary",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "saimehardp700",
+					"table": "dept_tbl"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_azuresqldb_saimehar_kv')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_inbound_cp')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -4375,6 +4468,34 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/LS_azuresqldb_saimehar_kv')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_server')]",
+					"database": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_userName')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "LS_saimehar_kv",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sqlpwd"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_saimehar_kv')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/LS_gen2')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -4387,6 +4508,19 @@
 						"type": "SecureString",
 						"value": "[parameters('LS_gen2_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_saimehar_kv')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('LS_saimehar_kv_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []

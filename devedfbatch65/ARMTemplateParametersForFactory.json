@@ -20,8 +20,20 @@
 		"LS_azuresqldb_saimehar_properties_typeProperties_userName": {
 			"value": "saimehar"
 		},
+		"LS_azuresqldb_saimehar_kv_properties_typeProperties_server": {
+			"value": "saimeharsqlserver.database.windows.net"
+		},
+		"LS_azuresqldb_saimehar_kv_properties_typeProperties_database": {
+			"value": "saimeharsqldb"
+		},
+		"LS_azuresqldb_saimehar_kv_properties_typeProperties_userName": {
+			"value": "saimehar"
+		},
 		"LS_gen2_properties_typeProperties_url": {
 			"value": "https://srinivasstgacctbatch95.dfs.core.windows.net/"
+		},
+		"LS_saimehar_kv_properties_typeProperties_baseUrl": {
+			"value": "https://saimeharkv95.vault.azure.net/"
 		}
 	}
 }

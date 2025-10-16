@@ -27,9 +27,25 @@
 			"type": "string",
 			"defaultValue": "saimehar"
 		},
+		"LS_azuresqldb_saimehar_kv_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "saimeharsqlserver.database.windows.net"
+		},
+		"LS_azuresqldb_saimehar_kv_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "saimeharsqldb"
+		},
+		"LS_azuresqldb_saimehar_kv_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "saimehar"
+		},
 		"LS_gen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://srinivasstgacctbatch95.dfs.core.windows.net/"
+		},
+		"LS_saimehar_kv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://saimeharkv95.vault.azure.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -75,6 +91,9 @@
 					},
 					"LS_gen2_properties_typeProperties_url": {
 						"value": "[parameters('LS_gen2_properties_typeProperties_url')]"
+					},
+					"LS_saimehar_kv_properties_typeProperties_baseUrl": {
+						"value": "[parameters('LS_saimehar_kv_properties_typeProperties_baseUrl')]"
 					}
 				}
 			},
@@ -93,6 +112,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_azuresqldb_saimehar_kv_properties_typeProperties_server": {
+						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_server')]"
+					},
+					"LS_azuresqldb_saimehar_kv_properties_typeProperties_database": {
+						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_database')]"
+					},
+					"LS_azuresqldb_saimehar_kv_properties_typeProperties_userName": {
+						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_userName')]"
 					}
 				}
 			},
