@@ -1,5 +1,5 @@
 {
-	"name": "18_lookupactivity",
+	"name": "21_lookupactivity",
 	"properties": {
 		"activities": [
 			{
@@ -88,16 +88,12 @@
 					"storedProcedureName": "[saimehardp700].[insertdeptdata]",
 					"storedProcedureParameters": {
 						"id": {
-							"value": "D13",
+							"value": "D19",
 							"type": "String"
 						},
 						"name": {
-							"value": "software",
+							"value": "BPO",
 							"type": "String"
-						},
-						"salary": {
-							"value": "60000",
-							"type": "Decimal"
 						}
 					}
 				},
