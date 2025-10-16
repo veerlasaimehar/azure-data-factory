@@ -2125,7 +2125,21 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "insert into [saimehardp700].[dept_tbl] values('D6', 'HR', 90000); select * from [saimehardp700].[dept_tbl] ",
+								"sqlReaderStoredProcedureName": "[[saimehardp700].[insertdeptdata]",
+								"storedProcedureParameters": {
+									"id": {
+										"type": "String",
+										"value": "D10"
+									},
+									"name": {
+										"type": "String",
+										"value": "audit"
+									},
+									"salary": {
+										"type": "Decimal",
+										"value": "20000"
+									}
+								},
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -2136,6 +2150,68 @@
 							},
 							"firstRowOnly": false
 						}
+					},
+					{
+						"name": "Script1",
+						"type": "Script",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "LS_azuresqldb_saimehar_kv",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "insert into [saimehardp700].[dept_tbl] values('D7', 'security', 50000)"
+								}
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
+						}
+					},
+					{
+						"name": "Stored procedure1",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[saimehardp700].[insertdeptdata]",
+							"storedProcedureParameters": {
+								"id": {
+									"value": "D13",
+									"type": "String"
+								},
+								"name": {
+									"value": "software",
+									"type": "String"
+								},
+								"salary": {
+									"value": "60000",
+									"type": "Decimal"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "LS_azuresqldb_saimehar_kv",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -2144,7 +2220,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_azuresqldb_lkp')]"
+				"[concat(variables('factoryId'), '/datasets/ds_azuresqldb_lkp')]",
+				"[concat(variables('factoryId'), '/linkedServices/LS_azuresqldb_saimehar_kv')]"
 			]
 		},
 		{
