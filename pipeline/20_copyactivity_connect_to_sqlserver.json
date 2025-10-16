@@ -1,5 +1,5 @@
 {
-	"name": "17_copyactivity_connect_to_sqlserver",
+	"name": "20_copyactivity_connect_to_sqlserver",
 	"properties": {
 		"activities": [
 			{
