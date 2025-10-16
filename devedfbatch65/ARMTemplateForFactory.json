@@ -2103,128 +2103,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/18_lookupactivity')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderStoredProcedureName": "[[saimehardp700].[insertdeptdata]",
-								"storedProcedureParameters": {
-									"id": {
-										"type": "String",
-										"value": "D10"
-									},
-									"name": {
-										"type": "String",
-										"value": "audit"
-									},
-									"salary": {
-										"type": "Decimal",
-										"value": "20000"
-									}
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "ds_azuresqldb_lkp",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "Script1",
-						"type": "Script",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"linkedServiceName": {
-							"referenceName": "LS_azuresqldb_saimehar_kv",
-							"type": "LinkedServiceReference"
-						},
-						"typeProperties": {
-							"scripts": [
-								{
-									"type": "Query",
-									"text": "insert into [saimehardp700].[dept_tbl] values('D7', 'security', 50000)"
-								}
-							],
-							"scriptBlockExecutionTimeout": "02:00:00"
-						}
-					},
-					{
-						"name": "Stored procedure1",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[saimehardp700].[insertdeptdata]",
-							"storedProcedureParameters": {
-								"id": {
-									"value": "D13",
-									"type": "String"
-								},
-								"name": {
-									"value": "software",
-									"type": "String"
-								},
-								"salary": {
-									"value": "60000",
-									"type": "Decimal"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "LS_azuresqldb_saimehar_kv",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_azuresqldb_lkp')]",
-				"[concat(variables('factoryId'), '/linkedServices/LS_azuresqldb_saimehar_kv')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/19_Switch_Activity')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2891,6 +2769,124 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_inbound_dept_csv')]",
 				"[concat(variables('factoryId'), '/datasets/ds_sqldb_dept')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/21_lookupactivity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderStoredProcedureName": "[[saimehardp700].[insertdeptdata]",
+								"storedProcedureParameters": {
+									"id": {
+										"type": "String",
+										"value": "D10"
+									},
+									"name": {
+										"type": "String",
+										"value": "audit"
+									},
+									"salary": {
+										"type": "Decimal",
+										"value": "20000"
+									}
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "ds_azuresqldb_lkp",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "Script1",
+						"type": "Script",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "LS_azuresqldb_saimehar_kv",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "insert into [saimehardp700].[dept_tbl] values('D7', 'security', 50000)"
+								}
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
+						}
+					},
+					{
+						"name": "Stored procedure1",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[saimehardp700].[insertdeptdata]",
+							"storedProcedureParameters": {
+								"id": {
+									"value": "D19",
+									"type": "String"
+								},
+								"name": {
+									"value": "BPO",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "LS_azuresqldb_saimehar_kv",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_azuresqldb_lkp')]",
+				"[concat(variables('factoryId'), '/linkedServices/LS_azuresqldb_saimehar_kv')]"
 			]
 		},
 		{
@@ -3944,52 +3940,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_inbound_param')]",
 				"[concat(variables('factoryId'), '/datasets/DS_sink')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Stored procedure1",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[saimehardp700].[insertdeptdata]",
-							"storedProcedureParameters": {
-								"id": {
-									"value": "",
-									"type": "String"
-								},
-								"name": {
-									"value": "",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "LS_azuresqldb_saimehar_kv",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_azuresqldb_saimehar_kv')]"
 			]
 		},
 		{
