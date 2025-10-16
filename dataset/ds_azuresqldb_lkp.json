@@ -1,0 +1,31 @@
+{
+	"name": "ds_azuresqldb_lkp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azuresqldb_saimehar_kv",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dept_id",
+				"type": "varchar"
+			},
+			{
+				"name": "dept_name",
+				"type": "varchar"
+			},
+			{
+				"name": "salary",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "saimehardp700",
+			"table": "dept_tbl"
+		}
+	}
+}
