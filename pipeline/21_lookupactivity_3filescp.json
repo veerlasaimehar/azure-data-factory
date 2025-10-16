@@ -148,7 +148,13 @@
 							"outputs": [
 								{
 									"referenceName": "ds_sqldb_tablename_parameter",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"table_nm": {
+											"value": "@variables('targettablename')",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
