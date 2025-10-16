@@ -1,0 +1,10 @@
+{
+	"name": "LS_saimehar_kv",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://saimeharkv95.vault.azure.net/"
+		}
+	}
+}
