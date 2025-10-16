@@ -3968,16 +3968,12 @@
 							"storedProcedureName": "[[saimehardp700].[insertdeptdata]",
 							"storedProcedureParameters": {
 								"id": {
-									"value": "D14",
+									"value": "",
 									"type": "String"
 								},
 								"name": {
-									"value": null,
+									"value": "",
 									"type": "String"
-								},
-								"salary": {
-									"value": null,
-									"type": "Decimal"
 								}
 							}
 						},
