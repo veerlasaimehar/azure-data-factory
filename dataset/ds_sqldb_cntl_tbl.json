@@ -1,0 +1,25 @@
+{
+	"name": "ds_sqldb_cntl_tbl",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azuresqldb_saimehar",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "filename",
+				"type": "varchar"
+			},
+			{
+				"name": "tablename",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "saimehardp700",
+			"table": "control_tbl"
+		}
+	}
+}
