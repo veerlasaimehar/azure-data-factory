@@ -2111,6 +2111,8 @@
 					{
 						"name": "Lookup1",
 						"type": "Lookup",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -2123,6 +2125,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
+								"sqlReaderQuery": "insert into [saimehardp700].[dept_tbl] values('D6', 'HR', 90000); select * from [saimehardp700].[dept_tbl] ",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -2130,7 +2133,8 @@
 								"referenceName": "ds_azuresqldb_lkp",
 								"type": "DatasetReference",
 								"parameters": {}
-							}
+							},
+							"firstRowOnly": false
 						}
 					}
 				],
