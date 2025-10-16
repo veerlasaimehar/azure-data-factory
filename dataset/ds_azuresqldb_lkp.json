@@ -25,7 +25,7 @@
 		],
 		"typeProperties": {
 			"schema": "saimehardp700",
-			"table": "dept_tbl"
+			"table": "accts"
 		}
 	}
 }
