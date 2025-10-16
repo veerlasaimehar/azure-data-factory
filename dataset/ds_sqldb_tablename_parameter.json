@@ -1,0 +1,24 @@
+{
+	"name": "ds_sqldb_tablename_parameter",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azuresqldb_saimehar",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table_nm": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "saimehardp700",
+			"table": {
+				"value": "@dataset().table_nm",
+				"type": "Expression"
+			}
+		}
+	}
+}
