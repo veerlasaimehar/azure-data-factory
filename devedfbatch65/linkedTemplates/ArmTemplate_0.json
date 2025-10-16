@@ -852,7 +852,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_outbound_cp')]",
+			"name": "[concat(parameters('factoryName'), '/ds_inbound_orders')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -865,8 +865,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "orders_merge.csv",
-						"folderPath": "outbound",
+						"fileName": "dept.csv",
+						"folderPath": "inbound",
 						"fileSystem": "devcontainer"
 					},
 					"columnDelimiter": ",",
@@ -874,7 +874,16 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "dept_id",
+						"type": "String"
+					},
+					{
+						"name": "dept_name",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
