@@ -1,5 +1,13 @@
 {
 	"name": "devedfbatch65",
+	"properties": {
+		"globalParameters": {
+			"country": {
+				"type": "string",
+				"value": "India"
+			}
+		}
+	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
