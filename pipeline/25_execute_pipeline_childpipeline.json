@@ -18,6 +18,27 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "getStatus",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getMessage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "status",
+					"value": "pipeline is success."
+				}
 			}
 		],
 		"parameters": {
@@ -30,6 +51,9 @@
 		},
 		"variables": {
 			"msg": {
+				"type": "String"
+			},
+			"status": {
 				"type": "String"
 			}
 		},
