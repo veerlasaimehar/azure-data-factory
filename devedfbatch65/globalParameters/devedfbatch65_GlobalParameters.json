@@ -1,1 +1,6 @@
-{}
+{
+	"country": {
+		"type": "string",
+		"value": "India"
+	}
+}
