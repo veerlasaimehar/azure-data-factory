@@ -1,0 +1,20 @@
+{
+	"name": "ds_inbound_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "orders.json",
+				"folderPath": "inbound",
+				"fileSystem": "devcontainer"
+			}
+		},
+		"schema": {}
+	}
+}
