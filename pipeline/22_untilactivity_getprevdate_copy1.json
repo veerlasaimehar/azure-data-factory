@@ -127,7 +127,7 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "getmessageinfo",
+										"name": "setFlagValue",
 										"type": "SetVariable",
 										"dependsOn": [],
 										"policy": {
@@ -136,29 +136,30 @@
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "printmessage",
-											"value": "3 files are found"
+											"variableName": "flag",
+											"value": "true"
 										}
 									},
 									{
-										"name": "setFlagValue",
-										"type": "SetVariable",
-										"dependsOn": [
-											{
-												"activity": "getmessageinfo",
-												"dependencyConditions": [
-													"Succeeded"
-												]
-											}
-										],
+										"name": "Execute Pipeline1",
+										"type": "ExecutePipeline",
+										"dependsOn": [],
 										"policy": {
-											"secureOutput": false,
 											"secureInput": false
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "flag",
-											"value": "true"
+											"pipeline": {
+												"referenceName": "22_untilactivity_getprevdate_copy1_childpip",
+												"type": "PipelineReference"
+											},
+											"waitOnCompletion": true,
+											"parameters": {
+												"files_lst": {
+													"value": "@activity('Filter1').output.value",
+													"type": "Expression"
+												}
+											}
 										}
 									}
 								]
