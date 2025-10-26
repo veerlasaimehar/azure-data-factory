@@ -1,0 +1,19 @@
+{
+	"name": "ds_outbound_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "outbound",
+				"fileSystem": "devcontainer"
+			}
+		},
+		"schema": {}
+	}
+}
