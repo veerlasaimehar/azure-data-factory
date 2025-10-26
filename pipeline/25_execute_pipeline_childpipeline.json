@@ -1,0 +1,38 @@
+{
+	"name": "25_execute_pipeline_childpipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "getMessage",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": {
+						"value": "@concat('person name is ', pipeline().parameters.prsn_nm,' person age is ', pipeline().parameters.prsn_age)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"prsn_nm": {
+				"type": "string"
+			},
+			"prsn_age": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"msg": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
