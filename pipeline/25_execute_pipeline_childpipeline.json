@@ -36,8 +36,17 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "status",
-					"value": "pipeline is success."
+					"variableName": "pipelineReturnValue",
+					"value": [
+						{
+							"key": "status",
+							"value": {
+								"type": "String",
+								"content": "Pipeline is success"
+							}
+						}
+					],
+					"setSystemVariable": true
 				}
 			}
 		],
