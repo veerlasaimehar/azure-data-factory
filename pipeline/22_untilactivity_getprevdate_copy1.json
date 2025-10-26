@@ -127,20 +127,6 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "setFlagValue",
-										"type": "SetVariable",
-										"dependsOn": [],
-										"policy": {
-											"secureOutput": false,
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"variableName": "flag",
-											"value": "true"
-										}
-									},
-									{
 										"name": "Execute Pipeline1",
 										"type": "ExecutePipeline",
 										"dependsOn": [],
@@ -160,6 +146,27 @@
 													"type": "Expression"
 												}
 											}
+										}
+									},
+									{
+										"name": "set flag value",
+										"type": "SetVariable",
+										"dependsOn": [
+											{
+												"activity": "Execute Pipeline1",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "flag",
+											"value": "true"
 										}
 									}
 								]
