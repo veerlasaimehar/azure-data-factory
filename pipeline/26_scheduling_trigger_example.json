@@ -1,0 +1,27 @@
+{
+	"name": "26_scheduling_trigger_example",
+	"properties": {
+		"activities": [
+			{
+				"name": "getMessage",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": "This is Sai Mehar"
+				}
+			}
+		],
+		"variables": {
+			"msg": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
