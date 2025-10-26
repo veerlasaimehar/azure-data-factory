@@ -221,6 +221,27 @@
 								"type": "Expression"
 							}
 						}
+					},
+					{
+						"name": "getStatus",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getMessage",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "status",
+							"value": "pipeline is success."
+						}
 					}
 				],
 				"policy": {
@@ -236,6 +257,9 @@
 				},
 				"variables": {
 					"msg": {
+						"type": "String"
+					},
+					"status": {
 						"type": "String"
 					}
 				},
@@ -624,12 +648,44 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"prsn_nm": "Sai Mehar",
+								"prsn_age": "Veerla"
+							}
+						}
+					},
+					{
+						"name": "set status",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipeline1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "p_status",
+							"value": {
+								"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.status",
+								"type": "Expression"
+							}
 						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"p_status": {
+						"type": "String"
+					}
 				},
 				"annotations": []
 			},
