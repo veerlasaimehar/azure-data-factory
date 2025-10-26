@@ -34,6 +34,9 @@
 		},
 		"LS_saimehar_kv_properties_typeProperties_baseUrl": {
 			"value": "https://saimeharkv95.vault.azure.net/"
+		},
+		"tg_stgevent_properties_typeProperties_scope": {
+			"value": "/subscriptions/f11fb516-b134-42a2-9d23-9f7ffaf00089/resourceGroups/Sai_Mehar_DP_700/providers/Microsoft.Storage/storageAccounts/srinivasstgacctbatch95"
 		}
 	}
 }

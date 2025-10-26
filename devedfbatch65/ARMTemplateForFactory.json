@@ -46,6 +46,10 @@
 		"LS_saimehar_kv_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://saimeharkv95.vault.azure.net/"
+		},
+		"tg_stgevent_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/f11fb516-b134-42a2-9d23-9f7ffaf00089/resourceGroups/Sai_Mehar_DP_700/providers/Microsoft.Storage/storageAccounts/srinivasstgacctbatch95"
 		}
 	},
 	"variables": {
@@ -6447,6 +6451,37 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/tg_stgevent')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "2_storage_event_tg_example",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/devcontainer/blobs/inbound/",
+					"blobPathEndsWith": "json",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('tg_stgevent_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/2_storage_event_tg_example')]"
+			]
 		}
 	]
 }
