@@ -47,9 +47,13 @@
 			"type": "string",
 			"defaultValue": "https://saimeharkv95.vault.azure.net/"
 		},
-		"tg_stgevent_properties_typeProperties_scope": {
+		"tg_properties_pipeline_parameters_window_start_time": {
 			"type": "string",
-			"defaultValue": "/subscriptions/f11fb516-b134-42a2-9d23-9f7ffaf00089/resourceGroups/Sai_Mehar_DP_700/providers/Microsoft.Storage/storageAccounts/srinivasstgacctbatch95"
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"tg_properties_pipeline_parameters_window_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
 		},
 		"containerUri": {
 			"type": "string",
@@ -116,15 +120,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"LS_azuresqldb_saimehar_kv_properties_typeProperties_server": {
-						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_server')]"
-					},
-					"LS_azuresqldb_saimehar_kv_properties_typeProperties_database": {
-						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_database')]"
-					},
-					"LS_azuresqldb_saimehar_kv_properties_typeProperties_userName": {
-						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -145,6 +140,21 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_azuresqldb_saimehar_kv_properties_typeProperties_server": {
+						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_server')]"
+					},
+					"LS_azuresqldb_saimehar_kv_properties_typeProperties_database": {
+						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_database')]"
+					},
+					"LS_azuresqldb_saimehar_kv_properties_typeProperties_userName": {
+						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_userName')]"
+					},
+					"tg_properties_pipeline_parameters_window_start_time": {
+						"value": "[parameters('tg_properties_pipeline_parameters_window_start_time')]"
+					},
+					"tg_properties_pipeline_parameters_window_end_time": {
+						"value": "[parameters('tg_properties_pipeline_parameters_window_end_time')]"
 					}
 				}
 			},
@@ -165,9 +175,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"tg_stgevent_properties_typeProperties_scope": {
-						"value": "[parameters('tg_stgevent_properties_typeProperties_scope')]"
 					}
 				}
 			},
