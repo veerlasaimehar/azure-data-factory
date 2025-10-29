@@ -47,11 +47,11 @@
 			"type": "string",
 			"defaultValue": "https://saimeharkv95.vault.azure.net/"
 		},
-		"tg_properties_pipeline_parameters_window_start_time": {
+		"tg_tumbling_window_properties_pipeline_parameters_window_start_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowStartTime}"
 		},
-		"tg_properties_pipeline_parameters_window_end_time": {
+		"tg_tumbling_window_properties_pipeline_parameters_window_end_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowEndTime}"
 		},
@@ -150,11 +150,11 @@
 					"LS_azuresqldb_saimehar_kv_properties_typeProperties_userName": {
 						"value": "[parameters('LS_azuresqldb_saimehar_kv_properties_typeProperties_userName')]"
 					},
-					"tg_properties_pipeline_parameters_window_start_time": {
-						"value": "[parameters('tg_properties_pipeline_parameters_window_start_time')]"
+					"tg_tumbling_window_properties_pipeline_parameters_window_start_time": {
+						"value": "[parameters('tg_tumbling_window_properties_pipeline_parameters_window_start_time')]"
 					},
-					"tg_properties_pipeline_parameters_window_end_time": {
-						"value": "[parameters('tg_properties_pipeline_parameters_window_end_time')]"
+					"tg_tumbling_window_properties_pipeline_parameters_window_end_time": {
+						"value": "[parameters('tg_tumbling_window_properties_pipeline_parameters_window_end_time')]"
 					}
 				}
 			},

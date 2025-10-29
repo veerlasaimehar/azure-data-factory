@@ -47,11 +47,11 @@
 			"type": "string",
 			"defaultValue": "https://saimeharkv95.vault.azure.net/"
 		},
-		"tg_properties_pipeline_parameters_window_start_time": {
+		"tg_tumbling_window_properties_pipeline_parameters_window_start_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowStartTime}"
 		},
-		"tg_properties_pipeline_parameters_window_end_time": {
+		"tg_tumbling_window_properties_pipeline_parameters_window_end_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowEndTime}"
 		}
@@ -6457,41 +6457,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/tg')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "1_tumbling_window_examples",
-						"type": "PipelineReference"
-					},
-					"parameters": {
-						"window_start_time": "[parameters('tg_properties_pipeline_parameters_window_start_time')]",
-						"window_end_time": "[parameters('tg_properties_pipeline_parameters_window_end_time')]"
-					}
-				},
-				"type": "TumblingWindowTrigger",
-				"typeProperties": {
-					"frequency": "Minute",
-					"interval": 24,
-					"startTime": "2025-10-29T15:30:00Z",
-					"endTime": "2025-11-01T14:08:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 50,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/1_tumbling_window_examples')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/1_tumbling_window_examples')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -6561,6 +6526,41 @@
 				"annotations": []
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/tg_tumbling_window')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "1_tumbling_window_examples",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"window_start_time": "[parameters('tg_tumbling_window_properties_pipeline_parameters_window_start_time')]",
+						"window_end_time": "[parameters('tg_tumbling_window_properties_pipeline_parameters_window_end_time')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Minute",
+					"interval": 5,
+					"startTime": "2025-10-26T16:37:00Z",
+					"endTime": "2025-10-30T15:32:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/1_tumbling_window_examples')]"
+			]
 		}
 	]
 }
