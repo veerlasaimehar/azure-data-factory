@@ -1,0 +1,65 @@
+{
+	"name": "26_tumbling_window_examples",
+	"properties": {
+		"activities": [
+			{
+				"name": "starttime",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "w_start_time",
+					"value": {
+						"value": "@pipeline().parameters.window_start_time",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "endtime",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "starttime",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "w_end_time",
+					"value": {
+						"value": "@pipeline().parameters.window_end_time",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"window_start_time": {
+				"type": "string"
+			},
+			"window_end_time": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"w_start_time": {
+				"type": "String"
+			},
+			"w_end_time": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
