@@ -2,7 +2,7 @@
 	"name": "tg_tumbling_window",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipeline": {
 			"pipelineReference": {
 				"referenceName": "26_tumbling_window_examples",
