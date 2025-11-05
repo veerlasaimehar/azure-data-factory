@@ -1,0 +1,1068 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "saimeharadf1"
+		},
+		"LS_azuresqldb_saimehar_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_azuresqldb_saimehar'"
+		},
+		"LS_gen2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_gen2'"
+		},
+		"LS_azuresqldb_saimehar_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "saimeharsqlserver.database.windows.net"
+		},
+		"LS_azuresqldb_saimehar_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "saimeharsqldb"
+		},
+		"LS_azuresqldb_saimehar_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "saimehar"
+		},
+		"LS_gen2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://srinivasstgacctbatch95.dfs.core.windows.net/"
+		},
+		"LS_saimehar_kv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://saimeharkv95.vault.azure.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/1_set_variable_activity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "getPersonName",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "prsn_name",
+							"value": "Rahul"
+						}
+					},
+					{
+						"name": "getMessage",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getPersonName",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "msg",
+							"value": {
+								"value": "@concat('Person Name is ', variables('prsn_name'))",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"prsn_name": {
+						"type": "String"
+					},
+					"msg": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-09-29T20:04:35Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/1_tumbling_window_examples')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "startTime",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "w_s_time",
+							"value": {
+								"value": "@pipeline().parameters.window_start_time",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "endTime",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "startTime",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "w_end_time",
+							"value": {
+								"value": "@pipeline().parameters.window_end_time",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"window_start_time": {
+						"type": "string"
+					},
+					"window_end_time": {
+						"type": "string"
+					}
+				},
+				"variables": {
+					"w_s_time": {
+						"type": "String"
+					},
+					"w_end_time": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/23_pipeline_parameter')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "getPersonName",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "p_name",
+							"value": {
+								"value": "@pipeline().parameters.person_name",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "getPersonAge",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getPersonName",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "p_age",
+							"value": {
+								"value": "@pipeline().parameters.person_age",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "getMessage",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getPersonAge",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "msg",
+							"value": {
+								"value": "@concat('Person Name is ', variables('p_name'),'Person age is ',variables('p_age'), 'country is ', pipeline().globalParameters.country)",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"person_name": {
+						"type": "string"
+					},
+					"person_age": {
+						"type": "string"
+					}
+				},
+				"variables": {
+					"p_name": {
+						"type": "String"
+					},
+					"p_age": {
+						"type": "String"
+					},
+					"msg": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/25_execute_pipeline_childpipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "getMessage",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "msg",
+							"value": {
+								"value": "@concat('person name is ', pipeline().parameters.prsn_nm,' person age is ', pipeline().parameters.prsn_age)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "getStatus",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getMessage",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "pipelineReturnValue",
+							"value": [
+								{
+									"key": "status",
+									"value": {
+										"type": "String",
+										"content": "Pipeline is success"
+									}
+								}
+							],
+							"setSystemVariable": true
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"prsn_nm": {
+						"type": "string"
+					},
+					"prsn_age": {
+						"type": "string"
+					}
+				},
+				"variables": {
+					"msg": {
+						"type": "String"
+					},
+					"status": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/26_scheduling_trigger_example')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "getMessage",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "msg",
+							"value": "This is Sai Mehar"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"msg": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/26_tumbling_window_examples')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "starttime",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "w_start_time",
+							"value": {
+								"value": "@pipeline().parameters.window_start_time",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "endtime",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "starttime",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "w_end_time",
+							"value": {
+								"value": "@pipeline().parameters.window_end_time",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"window_start_time": {
+						"type": "string"
+					},
+					"window_end_time": {
+						"type": "string"
+					}
+				},
+				"variables": {
+					"w_start_time": {
+						"type": "String"
+					},
+					"w_end_time": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/2_set_variable_activity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "getPersonName",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "prsn_name",
+							"value": "Sai"
+						}
+					},
+					{
+						"name": "getPersonAge",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getPersonName",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "prsn_age",
+							"value": "30"
+						}
+					},
+					{
+						"name": "getMessage",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getPersonAge",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "msg",
+							"value": {
+								"value": "@concat('person name is ', variables('prsn_name'), ' age is ', variables('prsn_age') )",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"prsn_name": {
+						"type": "String"
+					},
+					"prsn_age": {
+						"type": "String"
+					},
+					"msg": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-09-29T20:28:24Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/3_set_variable_activity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "getStudentName",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "std_name",
+							"value": "Sai"
+						}
+					},
+					{
+						"name": "getStudentAge",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getStudentName",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "std_age",
+							"value": "30"
+						}
+					},
+					{
+						"name": "getMessage",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getStudentLocation",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "msg",
+							"value": {
+								"value": "@concat('Student Name is ', variables('std_name'), ', Student age is ', variables('std_age'), ' and location is ', variables('std_location'))",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "getStudentLocation",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getStudentAge",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "std_location",
+							"value": "Chennai"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"std_name": {
+						"type": "String"
+					},
+					"std_age": {
+						"type": "String"
+					},
+					"msg": {
+						"type": "String"
+					},
+					"std_location": {
+						"type": "String",
+						"defaultValue": "Hyderabad"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-10-01T18:02:29Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/5_set_variable_activity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "getPersonName",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "prsn_name",
+							"value": "Ram"
+						}
+					},
+					{
+						"name": "getPersonAge",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getPersonName",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "prsn_age",
+							"value": "21"
+						}
+					},
+					{
+						"name": "getGender",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getPersonAge",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "prsn_gen",
+							"value": "Male"
+						}
+					},
+					{
+						"name": "getMessage",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getGender",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "msg",
+							"value": {
+								"value": "@concat('Person name is ', variables('prsn_name'), ', age is ', variables('prsn_age'), ', gender is ', variables('prsn_gen'), ' and location is ', variables('prsn_loc'))",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"prsn_name": {
+						"type": "String"
+					},
+					"prsn_age": {
+						"type": "String"
+					},
+					"prsn_gen": {
+						"type": "String"
+					},
+					"prsn_loc": {
+						"type": "String",
+						"defaultValue": "Hyderabad"
+					},
+					"msg": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-10-01T18:04:58Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_azuresqldb_saimehar')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('LS_azuresqldb_saimehar_properties_typeProperties_server')]",
+					"database": "[parameters('LS_azuresqldb_saimehar_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('LS_azuresqldb_saimehar_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('LS_azuresqldb_saimehar_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_gen2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('LS_gen2_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('LS_gen2_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_saimehar_kv')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('LS_saimehar_kv_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/24_execute_pipeline_parentpipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute Pipeline1",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "25_execute_pipeline_childpipeline",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"prsn_nm": "Sai Mehar",
+								"prsn_age": "Veerla"
+							}
+						}
+					},
+					{
+						"name": "set status",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipeline1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "p_status",
+							"value": {
+								"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.status",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"p_status": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/25_execute_pipeline_childpipeline')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_inbound')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "dp-900cert.pdf",
+						"folderPath": "inbound",
+						"fileSystem": "devcontainer"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_inbound_param')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": "inbound",
+						"fileSystem": "devcontainer"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_inbound_wildcard')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "inbound",
+						"fileSystem": "devcontainer"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_outbound')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "outbound",
+						"fileSystem": "devcontainer"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_sink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "outbound",
+						"fileSystem": "devcontainer"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_src')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "customers.txt",
+						"folderPath": "inbound",
+						"fileSystem": "devcontainer"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_src_multiple_param')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"foldername": {
+						"type": "string"
+					},
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().foldername",
+							"type": "Expression"
+						},
+						"fileSystem": "devcontainer"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_gen2')]"
+			]
+		}
+	]
+}
