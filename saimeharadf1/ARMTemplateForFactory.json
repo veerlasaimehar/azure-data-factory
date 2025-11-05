@@ -4077,104 +4077,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/23_pipeline_parameter')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "getPersonName",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "p_name",
-							"value": {
-								"value": "@pipeline().parameters.person_name",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "getPersonAge",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "getPersonName",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "p_age",
-							"value": {
-								"value": "@pipeline().parameters.person_age",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "getMessage",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "getPersonAge",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "msg",
-							"value": {
-								"value": "@concat('Person Name is ', variables('p_name'),'Person age is ',variables('p_age'), 'country is ', pipeline().globalParameters.country)",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"person_name": {
-						"type": "string"
-					},
-					"person_age": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"p_name": {
-						"type": "String"
-					},
-					"p_age": {
-						"type": "String"
-					},
-					"msg": {
-						"type": "String"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/24_execute_pipeline_parentpipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -6619,7 +6521,7 @@
 				"typeProperties": {
 					"frequency": "Minute",
 					"interval": 5,
-					"startTime": "2025-11-03T15:00:00Z",
+					"startTime": "2025-11-05T21:58:00Z",
 					"endTime": "2025-11-07T13:38:00Z",
 					"delay": "00:00:00",
 					"maxConcurrency": 50,
